@@ -1,0 +1,17 @@
+$watcher = New-Object System.IO.FileSystemWatcher
+$watcher.IncludeSubdirectories = $true
+$watcher.Path = 'D:\All'
+$watcher.EnableRaisingEvents = $true
+
+$action =
+{
+
+#get all  files in "d:\download\ creqated in last 12 hours
+$Files = Get-ChildItem "d:\ALL\*.txt" | Where {$_.CreationTime -gt (Get-Date).AddMinutes(-1)}
+
+#Move files to "D:\PDF files\"
+ForEach ($File in $Files) {
+Move-Item -Path $File.FullName -Destination "D:\ALL\move"
+}    
+}
+Register-ObjectEvent $watcher 'Created' -Action $action
