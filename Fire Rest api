@@ -1,0 +1,29 @@
+$urlbase="https://cat-fact.herokuapp.com"
+$urlendpoint="/facts"
+$url=$urlbase + $urlendpoint
+$response= Invoke-RestMethod -uri $url -Method Get -ContentType "application/json" -Headers $header
+
+
+<#
+foreach($item in $response){
+$item
+
+}
+#>
+
+
+#Powershell obj to json
+$jababi=$response | ConvertTo-Json
+
+Write-host "JSON only"
+
+#$jababi
+
+$pso=$jababi | ConvertFrom-Json
+
+
+Write-host "Powershell obj"
+
+
+#$pso
+
