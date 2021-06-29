@@ -1,0 +1,59 @@
+
+$otmmApiUrl = "http://localhost:11090/otmmapi/v5"
+$otmmUserr = "tsuper"
+$otmmPasswordd = "otmm"
+
+
+#SessionsApi
+$urir = "http://localhost:11090/otmmapi/v5/sessions"
+
+$contentType = 'application/x-www-form-urlencoded'
+
+ $body = @{
+ 
+ username="tsuper";
+ password="otmm"
+ 
+ }
+
+ $response = Invoke-RestMethod -Method Post -Uri $urir -ContentType $contentType -Body $body -SessionVariable 'session' -TimeoutSec 300
+
+         $result = @{
+
+            object = $session;
+
+            id = "$($response.session_resource.session.id)"
+        }
+        
+       echo " "
+        echo " "
+      
+
+      echo "1st session ID"
+      Write-Host $result.id
+
+      #----------------------Got Session------------------------------ 
+    
+    $jobId=760
+
+$urijjid = "$otmmApiUrl/jobs/$jobId"
+
+ $response = Invoke-RestMethod -Method Get -Uri $urijjid -WebSession $result.object 
+
+  $psObjj=  $response.job_resource.job.asset_ids
+
+ Write-Host " Asset_IDs are::"
+  
+  $psObjj.Count
+
+
+  Write-Host " Response::"
+  
+   $response | ConvertTo-Json
+
+ 
+
+ #$response.job_resource.job.asset_ids
+
+ $status=$response.job_resource.job.status
+ echo "  " 
