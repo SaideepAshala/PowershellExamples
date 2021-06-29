@@ -1,0 +1,7 @@
+$From="xxxxx@gmail.com"
+$to="xxxx@gmail.com"
+$Subject="Email Test"
+$Body="Orderconfirmed"
+$SMTPServer = "smtp.gmail.com"
+$SMTPPort = "587"
+Send-MailMessage -From $From -to $To  -Subject $Subject -Body $Body -SmtpServer $SMTPServer -port $SMTPPort -UseSsl -Credential (Get-Credential)
